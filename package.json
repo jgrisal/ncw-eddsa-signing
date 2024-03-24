@@ -4,7 +4,7 @@
   "description": "An example of using signing using an FPrv to transfer EdDSA assets after account takeover",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "tsx src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "bigint-buffer": "^1.1.5",
     "bs58check": "^3.0.1",
     "inquirer": "^8.2.6",
-    "ts-node": "^10.9.2"
+    "tsx": "^4.7.1"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.7",
