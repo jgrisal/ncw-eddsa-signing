@@ -1,6 +1,10 @@
 import * as web3 from "@solana/web3.js";
 import { EdDSAWallet } from "./EdDSAWallet";
 
+/**
+ * A class for generating a transfer transaction for SOL.
+ * The classes uses Solana's SDK to perform operations.
+ */
 export class SolanaWallet extends EdDSAWallet {
   private solConn: web3.Connection;
 
@@ -16,8 +20,8 @@ export class SolanaWallet extends EdDSAWallet {
 
   public async transfer(dest: String, amount: number): Promise<string> {
     // Load private key
-    const from = web3.Keypair.fromSecretKey(
-      Buffer.from(this.privateKey!.replace("0x", ""), "hex")
+    const from = new web3.PublicKey(
+      Buffer.from(this.publicKey.replace("0x", ""), "hex")
     );
 
     // Prepare target
@@ -26,22 +30,30 @@ export class SolanaWallet extends EdDSAWallet {
     console.log(
       `Going to transfer ${amount} ${
         this.isTestnet ? "SOL_TEST" : "SOL"
-      } from ${from.publicKey.toBase58()} to ${to.toBase58()}`
+      } from ${from.toBase58()} to ${to.toBase58()}`
     );
+
     // Create transaction
-    const tx = new web3.Transaction().add(
+    console.log("Fetching latest block and generating a transaction");
+    const latestBlockHash = await this.solConn.getLatestBlockhash();
+    const tx = new web3.Transaction({
+      feePayer: from,
+      recentBlockhash: latestBlockHash.blockhash,
+    }).add(
       web3.SystemProgram.transfer({
-        fromPubkey: from.publicKey,
+        fromPubkey: from,
         toPubkey: to,
         lamports: amount * web3.LAMPORTS_PER_SOL,
       })
     );
 
     // Sign and store signature in tx - EdDSA uses custom signaturem must be used like this
+    console.log("Signing and appending signature to transaction.");
     const sig = await this.sign(tx.serializeMessage());
-    tx.addSignature(from.publicKey, sig as Buffer);
+    tx.addSignature(from, sig as Buffer);
 
     // Broadcast
+    console.log("Broadcasting transaction.");
     const hash = await this.solConn.sendRawTransaction(tx.serialize());
     return hash;
   }

@@ -45,7 +45,7 @@ const randomBytes = (length = 32) => {
   return crypto.getRandomValues(new Uint8Array(length));
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// @ts-ignore
 const _0n = 0n;
 
 /**
@@ -60,8 +60,13 @@ const numberTo4BytesBE = (number: number) =>
 const flatten = (p: ExtendedPoint): ExtendedPoint =>
   ExtendedPoint.fromAffine(p.toAffine());
 
+  /**
+   * A class representing an EdDSA wallet.
+   * Fireblocks uses a non-standard signature for EdDSA, this signature is implemented here under the `sign` function.
+   * This class also handles the derivation of the x-private key (fprv for EdDSA) and generating of the pri/pub keys.
+   */
 export class EdDSAWallet {
-  protected privateKey;
+  private privateKey;
   protected publicKey;
 
   constructor(fprv: string, asset: SupportedAssets) {
