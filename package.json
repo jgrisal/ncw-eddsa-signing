@@ -1,0 +1,32 @@
+{
+  "name": "ncw-eddsa-signing",
+  "version": "1.0.0",
+  "description": "An example of using signing using an FPrv to transfer EdDSA assets after account takeover",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireblocks/ncw-eddsa-signing.git"
+  },
+  "author": "Fireblocks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireblocks/ncw-eddsa-signing/issues"
+  },
+  "homepage": "https://github.com/fireblocks/ncw-eddsa-signing#readme",
+  "dependencies": {
+    "@noble/curves": "^1.4.0",
+    "@noble/ed25519": "^2.1.0",
+    "@solana/web3.js": "^1.91.1",
+    "bigint-buffer": "^1.1.5",
+    "bs58check": "^3.0.1",
+    "inquirer": "^8.2.6",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.11.30"
+  }
+}
