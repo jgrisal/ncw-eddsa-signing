@@ -1,20 +1,20 @@
 # NCW - Example of signing EdDSA Transactions
 
-Since Fireblocks does not use standard signatures for EdDSA, this repo aims to provide a compact way to perform signatures for EdDSA.
+This repo aims to provide a compact way to perform signatures fore Fireblocks EdDSA extended keys.
 
 ## Limitations
 
-- Currently in this repo we only support SOL (and SOL_TEST) transactions.
+- Currently, in this repo we only support SOL (and SOL_TEST) transactions.
 
 ## Requirements
 
 To use this repo you will need:
 
-1. An `fprv` key for which there exists a SOL or SOL_TEST account. Not that the `fprv` is akin to the `xprv` the extended key from which all keys are derived. Within Fireblocks `fprv` is used for EdDSA assets
+1. An `fprv` key for which there exists a SOL or SOL_TEST account. Note that the `fprv` is akin to the `xprv` the extended key from which all keys are derived. Within Fireblocks `fprv` is used for EdDSA assets.
 
-2. A SOL (or other supported asset) account with balance in it
+2. A SOL (or other supported asset) account with a balance in it.
 
-3. Node (18 and above)
+3. Node (18 and above).
 
 ## How to run
 
