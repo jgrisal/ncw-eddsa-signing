@@ -1,3 +1,9 @@
+This project is currently in beta mode. While it is fully functional, please be aware that there may still be bugs or features under development. Your feedback and contributions are greatly appreciated as we work towards a stable release.
+
+**Liability Disclaimer:** The use of this code is at your own risk. The project maintainers and contributors are not liable for any damages or issues that may arise from its use.
+
+
+
 # NCW - Example of signing EdDSA Transactions
 
 This repo aims to provide a compact way to perform signatures fore Fireblocks EdDSA extended keys.
