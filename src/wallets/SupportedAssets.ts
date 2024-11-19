@@ -8,12 +8,17 @@
  *    SOL_TESTNET_STAKING: [44,1,0,0,1]
  * ```
  *
+ * If you need to derivate solana wallets please change the field #3
+ * For example if you need vault # 8 just configure SOL: [44, 501, 8, 0, 0]
+ * 
  * However it is not needed for just standard EdDSA operations.
  */
 export const supportedAssets = {
-  SOL_TEST: [44, 1, 0, 0, 0],
-  SOL: [44, 501, 0, 0, 0],
+  SOL_TEST: [44, 501, 8, 0, 0],
+  SOL: [44, 501, 8, 0, 0],
+  SOL_STAKING: [44, 501, 0, 0, 1], // Add staking support if needed
 } as const;
+
 
 /**
  * All the supported assets
