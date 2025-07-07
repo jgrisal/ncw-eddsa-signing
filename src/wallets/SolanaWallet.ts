@@ -167,16 +167,26 @@ export class SolanaWallet extends EdDSAWallet {
   }
 
   /**
-  * Create withdraw stake operation in an undelegated stake account
-  */
-
-  public async withdrawStake(stakeAccountPubkey1: string, destinationPubkey: string, amount: number): Promise<string> {
+   * Withdraw the entire balance of a stake account to a destination account.
+   */
+  public async withdrawStake(stakeAccountPubkey1: string, destinationPubkey: string): Promise<string> {
     const from = new web3.PublicKey(Buffer.from(this.publicKey.replace("0x", ""), "hex"));
     const stakeAccount = new web3.PublicKey(stakeAccountPubkey1);
     const destinationAccount = new web3.PublicKey(destinationPubkey);
 
-    // Proceed with withdrawal if deactivation check passes
+    // Fetch the balance of the stake account in lamports
+    console.log("Fetching stake account balance.");
+    const stakeAccountBalance = await this.solConn.getBalance(stakeAccount);
+
+    if (stakeAccountBalance === 0) {
+      throw new Error("Stake account balance is zero. Nothing to withdraw.");
+    }
+
+    // Fetch the latest blockhash
     const latestBlockHash = await this.solConn.getLatestBlockhash();
+
+    // Create the withdrawal transaction
+    console.log(`Preparing to withdraw ${stakeAccountBalance} lamports.`);
     const withdrawTx = new web3.Transaction({
       feePayer: from,
       recentBlockhash: latestBlockHash.blockhash,
@@ -185,15 +195,19 @@ export class SolanaWallet extends EdDSAWallet {
         stakePubkey: stakeAccount,
         authorizedPubkey: from,
         toPubkey: destinationAccount,
-        lamports: amount * web3.LAMPORTS_PER_SOL,
+        lamports: stakeAccountBalance, // Withdraw the entire balance
       })
     );
 
+    // Sign the transaction
     withdrawTx.addSignature(from, await this.sign(withdrawTx.serializeMessage()) as Buffer);
-    console.log("Broadcasting transaction to withdraw stake.");
+
+    // Send the transaction
+    console.log("Broadcasting transaction to withdraw the entire stake balance.");
     const withdrawHash = await this.solConn.sendRawTransaction(withdrawTx.serialize(), { skipPreflight: false });
     console.log(`Stake withdrawn with transaction hash: ${withdrawHash}`);
 
+    // Confirm the transaction
     await this.solConn.confirmTransaction(withdrawHash);
     console.log("Stake withdrawal confirmed.");
 
