@@ -2,6 +2,7 @@ import { Buffer } from "buffer";
 import { toBigIntBE } from "bigint-buffer";
 import bs58check from "bs58check";
 import { createHmac, randomBytes as cRandomBytes } from "crypto";
+import crypto from "crypto";
 import { toBeHex } from "ethers";
 import { ExtendedPoint, CURVE as edCURVE, etc } from "@noble/ed25519";
 import {
