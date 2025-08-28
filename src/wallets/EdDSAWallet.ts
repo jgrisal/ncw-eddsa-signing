@@ -61,11 +61,11 @@ const numberTo4BytesBE = (number: number) =>
 const flatten = (p: ExtendedPoint): ExtendedPoint =>
   ExtendedPoint.fromAffine(p.toAffine());
 
-  /**
-   * A class representing an EdDSA wallet.
-   * Fireblocks uses a non-standard signature for EdDSA, this signature is implemented here under the `sign` function.
-   * This class also handles the derivation of the x-private key (fprv for EdDSA) and generating of the pri/pub keys.
-   */
+/**
+ * A class representing an EdDSA wallet.
+ * Fireblocks uses a non-standard signature for EdDSA, this signature is implemented here under the `sign` function.
+ * This class also handles the derivation of the x-private key (fprv for EdDSA) and generating of the pri/pub keys.
+ */
 export class EdDSAWallet {
   private privateKey;
   protected publicKey;
